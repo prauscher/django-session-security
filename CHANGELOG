@@ -4,12 +4,23 @@
     Fix #114: guard reverse('session_security_ping') with NoReverseMatch catch
     Fix #133: Django 5.x logout now uses POST form instead of GET redirect
     Fix #34: nextPing declared as let in script.js apply() to avoid implicit global
-    Drop dead Django <1.10 / <2.0 compatibility code in middleware.py
+    Fix #148: Selenium 4.3+ compat — replace deprecated find_element_by_*() calls,
+              drop unmaintained unittest-data-provider
+    Fix doctest: catch KeyError in get_last_activity when session key is absent
+    Fix redirect_to_logout template tag to read SESSION_SECURITY_REDIRECT_TO_LOGOUT
+        dynamically at call time; add returnToUrl to the SessionSecurity JS constructor
+        when the setting is enabled
+    Drop dead Django <1.10 / <2.0 compatibility code in middleware.py; remove
+        legacy test_project/, unused setup.py commands, duplicate dialog.html tag
+    Add ruff linting and doctest job to CI
+    Update docs: document all six user-facing settings in quick.rst (closes #95, #134),
+        update supported Python/Django versions in README
     Update super() calls in tests to zero-argument form (PR #165)
     Remove six dependency from docs/source/conf.py (PR #159)
     Pin sqlparse>=0.5.0 and zipp>=3.19.1 in docs/requirements.txt (PR #160, #161)
     Update CI to Python 3.10-3.14, Django 4.2-6.0, ubuntu-latest, checkout@v4, setup-python@v5
     Update setup.py classifiers to reflect supported Python/Django versions
+    Add **/db.sqlite to .gitignore
 
 2.6.7 release
 
