@@ -1,5 +1,4 @@
 import time
-import unittest
 
 from django.test.client import Client
 from django import test

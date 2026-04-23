@@ -1,8 +1,5 @@
 import os
 import time
-import atexit
-
-from django.contrib.auth.models import User
 
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
