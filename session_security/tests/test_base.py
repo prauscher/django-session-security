@@ -1,19 +1,17 @@
 import os
-import time
 
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-from selenium import webdriver
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import LiveServerTestCase
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 
-from session_security.settings import WARN_AFTER, EXPIRE_AFTER
-
+from session_security.settings import EXPIRE_AFTER, WARN_AFTER
 
 WAIT_TIME = 5 if not os.environ.get('CI', False) else 30
 
 
-class SettingsMixin(object):
+class SettingsMixin:
     def setUp(self):
         # Give some time for selenium lag
         self.min_warn_after = WARN_AFTER
@@ -36,7 +34,7 @@ class BaseLiveServerTestCase(SettingsMixin, StaticLiveServerTestCase,
         options.add_argument("--headless")
         super(LiveServerTestCase, self).setUp()
         self.sel= webdriver.Firefox(options=options)
-        self.sel.get('%s%s' % (self.live_server_url, '/admin/'))
+        self.sel.get(f'{self.live_server_url}/admin/')
         self.sel.find_element(By.NAME, 'username').send_keys('test')
         self.sel.find_element(By.NAME, 'password').send_keys('test')
         self.sel.find_element(By.XPATH, '//input[@value="Log in"]').click()

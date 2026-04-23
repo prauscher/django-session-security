@@ -11,7 +11,7 @@ Make sure that it is placed **after** authentication middlewares.
 
 from datetime import datetime, timedelta
 
-from django.urls import reverse, resolve, Resolver404, NoReverseMatch
+from django.urls import NoReverseMatch, Resolver404, resolve, reverse
 from django.utils.deprecation import MiddlewareMixin
 
 from .utils import get_last_activity, set_last_activity
@@ -25,7 +25,7 @@ class SessionSecurityMiddleware(MiddlewareMixin):
 
     def is_passive_request(self, request):
         """ Should we skip activity update on this URL/View. """
-        from .settings import PASSIVE_URLS, PASSIVE_URL_NAMES
+        from .settings import PASSIVE_URL_NAMES, PASSIVE_URLS
 
         if request.path in PASSIVE_URLS:
             return True

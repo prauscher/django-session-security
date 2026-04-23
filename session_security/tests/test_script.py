@@ -1,16 +1,14 @@
 import datetime
 import time
 
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.ui import WebDriverWait
 
-from .test_base import BaseLiveServerTestCase, WAIT_TIME
+from .test_base import BaseLiveServerTestCase
 
 
 class ScriptTestCase(BaseLiveServerTestCase):
-
 
     def test_warning_shows_and_session_expires(self):
         start = datetime.datetime.now()
@@ -19,8 +17,11 @@ class ScriptTestCase(BaseLiveServerTestCase):
             self.sel.switch_to.window(win)
             try:
                 el = WebDriverWait(self.sel, self.max_warn_after).until(
-                expected_conditions.visibility_of_element_located((By.ID, "session_security_warning")))
-                assert(el.is_displayed())
+                    expected_conditions.visibility_of_element_located(
+                        (By.ID, "session_security_warning")
+                    )
+                )
+                self.assertTrue(el.is_displayed())
             except Exception:
                 self.fail('max_warn_after did not display session_security_warning')
         end = datetime.datetime.now()
@@ -33,8 +34,11 @@ class ScriptTestCase(BaseLiveServerTestCase):
             self.sel.switch_to.window(win)
             try:
                 el = WebDriverWait(self.sel, self.max_expire_after).until(
-                expected_conditions.visibility_of_element_located((By.ID, "id_password")))
-                assert(el.is_displayed())
+                    expected_conditions.visibility_of_element_located(
+                        (By.ID, "id_password")
+                    )
+                )
+                self.assertTrue(el.is_displayed())
                 delta = datetime.datetime.now() - start
                 self.assertGreaterEqual(delta.seconds, self.min_expire_after)
                 self.assertLessEqual(delta.seconds, self.max_expire_after)
@@ -45,7 +49,10 @@ class ScriptTestCase(BaseLiveServerTestCase):
         time.sleep(6 * .7)
         try:
             WebDriverWait(self.sel, self.max_warn_after).until(
-            expected_conditions.visibility_of_element_located((By.ID, "session_security_warning")))
+                expected_conditions.visibility_of_element_located(
+                    (By.ID, "session_security_warning")
+                )
+            )
 
             self.press_space()
 
@@ -54,15 +61,15 @@ class ScriptTestCase(BaseLiveServerTestCase):
 
             try:
                 el = WebDriverWait(self.sel, 20).until(
-                expected_conditions.invisibility_of_element_located((By.ID, "session_security_warning")))
-
-                assert(not el.is_displayed())
+                    expected_conditions.invisibility_of_element_located(
+                        (By.ID, "session_security_warning")
+                    )
+                )
+                self.assertFalse(el.is_displayed())
             except Exception:
                 self.fail('warning did not hide after activity')
         except Exception:
             self.fail('warning did not appear before warn_after')
-
-
 
     def test_activity_prevents_warning(self):
         time.sleep(self.min_warn_after * .7)
@@ -70,8 +77,11 @@ class ScriptTestCase(BaseLiveServerTestCase):
         start = datetime.datetime.now()
         try:
             el = WebDriverWait(self.sel, self.max_warn_after).until(
-            expected_conditions.visibility_of_element_located((By.ID, "session_security_warning")))
-            assert(el.is_displayed())
+                expected_conditions.visibility_of_element_located(
+                    (By.ID, "session_security_warning")
+                )
+            )
+            self.assertTrue(el.is_displayed())
 
             for win in self.sel.window_handles:
                 self.sel.switch_to.window(win)

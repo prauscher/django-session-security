@@ -1,10 +1,10 @@
 from datetime import datetime, timedelta
 
-from django.test.client import Client
 from django import test
+from django.test.client import Client
 
-from session_security.utils import set_last_activity
 from session_security import settings
+from session_security.utils import set_last_activity
 
 
 class ViewsTestCase(test.TestCase):
@@ -17,7 +17,7 @@ class ViewsTestCase(test.TestCase):
         self.client.logout()
         self.client.get('/admin/')
         response = self.client.get('/session_security/ping/?idleFor=81')
-        self.assertEqual(response.content, '"logout"'.encode("utf-8"))
+        self.assertEqual(response.content, b'"logout"')
 
     def test_ping(self):
         cases = [
@@ -38,7 +38,9 @@ class ViewsTestCase(test.TestCase):
                 session = self.client.session
                 set_last_activity(session, now - timedelta(seconds=server))
                 session.save()
-                response = self.client.get('/session_security/ping/?idleFor=%s' % client)
+                response = self.client.get(
+                    f'/session_security/ping/?idleFor={client}'
+                )
 
                 self.assertEqual(response.content, expected.encode("utf-8"))
                 self.assertEqual(authenticated, '_auth_user_id' in self.client.session)

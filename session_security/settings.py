@@ -35,7 +35,13 @@ SESSION_SECURITY_INSECURE
 """
 from django.conf import settings
 
-__all__ = ['EXPIRE_AFTER', 'WARN_AFTER', 'PASSIVE_URLS', 'PASSIVE_URL_NAMES', 'REDIRECT_TO_LOGOUT']
+__all__ = [
+    'EXPIRE_AFTER',
+    'WARN_AFTER',
+    'PASSIVE_URLS',
+    'PASSIVE_URL_NAMES',
+    'REDIRECT_TO_LOGOUT',
+]
 
 # WARNING:  These values cannot be reconfigured by tests
 EXPIRE_AFTER = getattr(settings, 'SESSION_SECURITY_EXPIRE_AFTER', 600)

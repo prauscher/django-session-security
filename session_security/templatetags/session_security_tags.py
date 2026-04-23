@@ -1,6 +1,6 @@
 from django import template
 
-from session_security.settings import WARN_AFTER, EXPIRE_AFTER, REDIRECT_TO_LOGOUT
+from session_security.settings import EXPIRE_AFTER, REDIRECT_TO_LOGOUT, WARN_AFTER
 
 register = template.Library()
 

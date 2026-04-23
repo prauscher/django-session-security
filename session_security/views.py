@@ -1,8 +1,8 @@
 """ One view method for AJAX requests by SessionSecurity objects. """
 from datetime import datetime
 
-from django.views import generic
 from django import http
+from django.views import generic
 
 from .utils import get_last_activity
 
