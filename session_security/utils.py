@@ -37,8 +37,9 @@ def get_last_activity(session):
                     '%Y-%m-%dT%H:%M:%S')
         except (ValueError, TypeError):
             return datetime.now()
-    except (AttributeError, TypeError):
+    except (AttributeError, TypeError, KeyError):
         # AttributeError: _strptime is a known Python threading bug
         # (http://bugs.python.org/issue7980); fall back gracefully.
+        # KeyError: session key absent.
         return datetime.now()
 
