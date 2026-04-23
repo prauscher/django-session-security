@@ -1,9 +1,9 @@
-How to trigger activity programaticaly in JS ?
-----------------------------------------------
+How to trigger activity programmatically in JS ?
+------------------------------------------------
 
-Call ``sessionSecurity.activity()`` [#script]_ every time you want to programaticaly trigger an activity.
+Call ``sessionSecurity.activity()`` [#script]_ every time you want to programmatically trigger an activity.
 
-.. [#script] http://django-session-security.readthedocs.org/en/master/_static/script.html#section-11
+.. [#script] https://django-session-security.readthedocs.io/en/latest/_static/script.html#section-11
 
 How to disable the "Are you sure you want to leave this page?" warning ?
 ------------------------------------------------------------------------

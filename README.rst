@@ -15,9 +15,9 @@
         :alt: License
 
 Supported python versions
-    Python 3.8, 3.9, 3.10
+    Python 3.10, 3.11, 3.12, 3.13, 3.14
 Supported django versions
-    Django 1.8, 1.9, 1.10, 1.11, 2.2, 3.2, 4.0, 4.1
+    Django 4.2, 5.0, 5.1, 5.2, 6.0
 
 A little javascript and middleware work together to ensure that the user was
 active during the past X minutes in any tab he has open.
@@ -107,10 +107,10 @@ for users on "public machines" to ensure the SSO session is also timed out.
 Requirements
 ------------
 
-- Python 3.8+
+- Python 3.10+
 - jQuery 1.7+
-- Django 3.2 to 4.0
-- django.contrib.staticfiles or #YoYo
+- Django 4.2 to 6.0
+- django.contrib.staticfiles
 
 Resources
 ---------

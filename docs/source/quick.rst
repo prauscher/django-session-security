@@ -72,3 +72,31 @@ then you're on your own to manage staticfiles.
 After jQuery, add to your base template::
 
     {% include 'session_security/all.html' %}
+
+Settings
+--------
+
+All settings are optional. Add them to your Django settings file to override
+the defaults.
+
+``SESSION_SECURITY_WARN_AFTER`` (default: ``540``)
+    Seconds of inactivity before the warning dialog is shown.
+
+``SESSION_SECURITY_EXPIRE_AFTER`` (default: ``600``)
+    Seconds of inactivity before the user is logged out.
+
+``SESSION_SECURITY_PASSIVE_URLS``
+    List of URL paths the middleware should ignore when tracking activity.
+
+``SESSION_SECURITY_PASSIVE_URL_NAMES``
+    Same as ``SESSION_SECURITY_PASSIVE_URLS`` but takes Django URL names.
+
+``SESSION_SECURITY_REDIRECT_TO_LOGOUT`` (default: ``False``)
+    When ``True``, an expired session redirects to the logout URL instead of
+    reloading the current page. Recommended for SSO setups to avoid silent
+    re-authentication. On Django 5.x and above, logout is performed via a
+    POST request automatically.
+
+``SESSION_SECURITY_INSECURE`` (default: ``False``)
+    Set to ``True`` to allow the app to run without
+    ``SESSION_EXPIRE_AT_BROWSER_CLOSE = True``. Not recommended.
