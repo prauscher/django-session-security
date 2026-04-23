@@ -56,10 +56,12 @@ yourlabs.SessionSecurity.prototype = {
     // seconds.
     expire: function() {
         this.expired = true;
-        if (this.returnToUrl !== undefined) {
+        var logoutForm = document.getElementById('session_security_logout_form');
+        if (logoutForm) {
+            logoutForm.submit();
+        } else if (this.returnToUrl !== undefined) {
             window.location.href = this.returnToUrl;
-        }
-        else {
+        } else {
             window.location.reload();
         }
     },
@@ -133,6 +135,7 @@ yourlabs.SessionSecurity.prototype = {
     apply: function() {
         // Cancel timeout if any, since we're going to make our own
         clearTimeout(this.timeout);
+        let nextPing;
         var idleFor = Math.floor((new Date() - this.lastActivity) / 1000);
 
         if (idleFor >= this.expireAfter) {

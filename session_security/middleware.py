@@ -11,17 +11,8 @@ Make sure that it is placed **after** authentication middlewares.
 
 from datetime import datetime, timedelta
 
-import django
-try: # Django 2.0
-    from django.urls import reverse, resolve, Resolver404
-except: # Django < 2.0
-    from django.core.urlresolvers import reverse, resolve, Resolver404
-
-try:
-    from django.utils.deprecation import MiddlewareMixin
-except ImportError:  # Django < 1.10
-    # Works perfectly for everyone using MIDDLEWARE_CLASSES
-    MiddlewareMixin = object
+from django.urls import reverse, resolve, Resolver404, NoReverseMatch
+from django.utils.deprecation import MiddlewareMixin
 
 from .utils import get_last_activity, set_last_activity
 
@@ -68,8 +59,14 @@ class SessionSecurityMiddleware(MiddlewareMixin):
         expire_seconds = self.get_expire_seconds(request)
         if delta >= timedelta(seconds=expire_seconds):
             self.do_logout(request)
-        elif (request.path == reverse('session_security_ping') and
-                'idleFor' in request.GET):
+            return
+
+        try:
+            ping_url = reverse('session_security_ping')
+        except NoReverseMatch:
+            ping_url = None
+
+        if ping_url and request.path == ping_url and 'idleFor' in request.GET:
             self.update_last_activity(request, now)
         elif not self.is_passive_request(request):
             set_last_activity(request.session, now)
@@ -101,14 +98,8 @@ class SessionSecurityMiddleware(MiddlewareMixin):
         set_last_activity(request.session, last_activity)
 
     def is_authenticated(self, request):
-        # This is a separate method to allow for subclasses to override the
-        # behavior, mostly.
-        if django.VERSION < (1, 10):
-            is_authenticated = request.user.is_authenticated()
-        else:
-            is_authenticated = request.user.is_authenticated
-
-        return is_authenticated
+        # Separate method so subclasses can override.
+        return request.user.is_authenticated
 
     def do_logout(self, request):
         # This is a separate method to allow for subclasses to override the

@@ -13,7 +13,7 @@ class MiddlewareTestCase(SettingsMixin, test.TestCase):
     fixtures = ['session_security_test_user']
 
     def setUp(self):
-        super(MiddlewareTestCase, self).setUp()
+        super().setUp()
         self.client = Client()
 
     def test_auto_logout(self):

@@ -20,7 +20,7 @@ from django.views import generic
 class SleepView(generic.TemplateView):
     def get(self, request, *args, **kwargs):
         time.sleep(int(request.GET.get('seconds', 0)))
-        return super(SleepView, self).get(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
 
 
 urlpatterns = [

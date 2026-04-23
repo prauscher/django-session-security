@@ -1,2 +1,4 @@
 django
 pycco
+sqlparse>=0.5.0
+zipp>=3.19.1

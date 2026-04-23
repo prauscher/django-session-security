@@ -29,13 +29,17 @@ It provides sensible defaults so you could start with just::
                 pingUrl: '{% url 'session_security_ping' %}',
                 warnAfter: {{ request|warn_after|unlocalize }},
                 expireAfter: {{ request|expire_after|unlocalize }},
-                {% with redirect_to_logout=request|redirect_to_logout %}
-                {% if redirect_to_logout %}
-                returnToUrl: {% url 'logout' %},
-                {% endif %}
-                {% endwith %}
                 confirmFormDiscard: "{% trans 'You have unsaved changes in a form of this page.' %}"
             });
         </script>
-    {% endlocalize %}    
+    {% endlocalize %}
+
+    {# Hidden POST form for logout — required by Django 5.x (LogoutView no longer accepts GET) #}
+    {% with redirect_to_logout=request|redirect_to_logout %}
+    {% if redirect_to_logout %}
+    <form id="session_security_logout_form" action="{% url 'logout' %}" method="post" style="display:none">
+        {% csrf_token %}
+    </form>
+    {% endif %}
+    {% endwith %}
 {% endif %}

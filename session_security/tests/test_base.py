@@ -27,7 +27,7 @@ class SettingsMixin(object):
         self.max_warn_after = EXPIRE_AFTER * 0.9
         self.min_expire_after = EXPIRE_AFTER
         self.max_expire_after = EXPIRE_AFTER * 1.5
-        super(SettingsMixin, self).setUp()
+        super().setUp()
 
 
 class BaseLiveServerTestCase(SettingsMixin, StaticLiveServerTestCase,
@@ -56,4 +56,4 @@ class BaseLiveServerTestCase(SettingsMixin, StaticLiveServerTestCase,
         self.sel.quit()
     @classmethod
     def tearDownClass(cls):
-        super(BaseLiveServerTestCase, cls).tearDownClass()
+        super().tearDownClass()
