@@ -23,16 +23,19 @@ It provides sensible defaults so you could start with just::
     <script type="text/javascript" src="{% static 'session_security/script.js' %}"></script>
 
     {# Bootstrap a SessionSecurity instance as the sessionSecurity global variable #}
+    {% with redirect_to_logout_flag=request|redirect_to_logout %}
     {% localize off %}
         <script type="text/javascript"{% if request.csp_nonce %} nonce="{{ request.csp_nonce }}"{% endif %}>
             var sessionSecurity = new yourlabs.SessionSecurity({
                 pingUrl: '{% url 'session_security_ping' %}',
                 warnAfter: {{ request|warn_after|unlocalize }},
                 expireAfter: {{ request|expire_after|unlocalize }},
-                confirmFormDiscard: "{% trans 'You have unsaved changes in a form of this page.' %}"
+                confirmFormDiscard: "{% trans 'You have unsaved changes in a form of this page.' %}"{% if redirect_to_logout_flag %},
+                returnToUrl: '{% url 'logout' %}'{% endif %}
             });
         </script>
     {% endlocalize %}
+    {% endwith %}
 
     {# Hidden POST form for logout — required by Django 5.x (LogoutView no longer accepts GET) #}
     {% with redirect_to_logout=request|redirect_to_logout %}

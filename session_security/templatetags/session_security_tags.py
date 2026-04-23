@@ -1,6 +1,7 @@
 from django import template
+from django.conf import settings as django_settings
 
-from session_security.settings import EXPIRE_AFTER, REDIRECT_TO_LOGOUT, WARN_AFTER
+from session_security.settings import EXPIRE_AFTER, WARN_AFTER
 
 register = template.Library()
 
@@ -17,4 +18,4 @@ def warn_after(request):
 
 @register.filter
 def redirect_to_logout(request):
-    return REDIRECT_TO_LOGOUT
+    return getattr(django_settings, 'SESSION_SECURITY_REDIRECT_TO_LOGOUT', False)
