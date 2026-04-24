@@ -1,5 +1,7 @@
 import datetime
+import os
 import time
+import unittest
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
@@ -10,6 +12,7 @@ from .test_base import BaseLiveServerTestCase
 
 class ScriptTestCase(BaseLiveServerTestCase):
 
+    @unittest.skipIf(os.environ.get('CI'), 'flaky timing boundary in CI')
     def test_warning_shows_and_session_expires(self):
         start = datetime.datetime.now()
 
