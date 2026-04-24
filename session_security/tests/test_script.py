@@ -62,15 +62,12 @@ class ScriptTestCase(BaseLiveServerTestCase):
             for win in self.sel.window_handles:
                 self.sel.switch_to.window(win)
 
-            try:
-                el = WebDriverWait(self.sel, 20).until(
-                    expected_conditions.invisibility_of_element_located(
-                        (By.ID, "session_security_warning")
-                    )
+            result = WebDriverWait(self.sel, 20).until(
+                expected_conditions.invisibility_of_element_located(
+                    (By.ID, "session_security_warning")
                 )
-                self.assertFalse(el.is_displayed())
-            except Exception:
-                self.fail('warning did not hide after activity')
+            )
+            self.assertTrue(result)
         except Exception:
             self.fail('warning did not appear before warn_after')
 

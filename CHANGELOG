@@ -19,7 +19,7 @@
     Remove six dependency from docs/source/conf.py (PR #159)
     Pin sqlparse>=0.5.0 and zipp>=3.19.1 in docs/requirements.txt (PR #160, #161)
     Update CI to Python 3.10-3.14, Django 4.2-6.0, ubuntu-latest, checkout@v4, setup-python@v5
-    Update setup.py classifiers to reflect supported Python/Django versions
+    Update pyproject.toml classifiers to reflect supported Python/Django versions
     Add **/db.sqlite to .gitignore
 
 2.6.7 release
