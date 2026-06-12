@@ -25,7 +25,7 @@ It provides sensible defaults so you could start with just::
     {# Bootstrap a SessionSecurity instance as the sessionSecurity global variable #}
     {% with redirect_to_logout_flag=request|redirect_to_logout %}
     {% localize off %}
-        <script type="text/javascript"{% if csp_nonce is not None %} nonce="{{ csp_nonce }}"{% elif request.csp_nonce %} nonce="{{ request.csp_nonce }}"{% endif %}>
+        <script type="text/javascript" nonce="{% if request.csp_nonce %}{{ request.csp_nonce }}{% else %}{{ csp_nonce }}{% endif %}">
             var sessionSecurity = new yourlabs.SessionSecurity({
                 pingUrl: '{% url 'session_security_ping' %}',
                 warnAfter: {{ request|warn_after|unlocalize }},
